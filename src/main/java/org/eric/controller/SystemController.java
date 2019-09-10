@@ -1,6 +1,7 @@
 package org.eric.controller;
 
 import org.eric.service.HelloService;
+import org.eric.utils.JSend;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,7 +24,12 @@ public class SystemController {
     }
 
     @RequestMapping(path = {"/"}, method = RequestMethod.GET)
-    public String getMsg() {
-        return helloService.getMsg();
+    public JSend getMsg() throws Exception {
+        return JSend.success(helloService.getMsg());
+    }
+
+    @RequestMapping(path = {"/get_error"}, method = RequestMethod.GET)
+    public JSend getError() throws Exception {
+        throw new Exception();
     }
 }

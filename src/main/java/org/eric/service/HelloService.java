@@ -1,9 +1,11 @@
 package org.eric.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.eric.Repository.CustomerRepository;
 import org.eric.model.Customer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,12 +15,17 @@ public class HelloService {
     @Autowired
     private CustomerRepository customerRepository;
 
-    public String getMsg() {
-        List<Customer> customers = customerRepository.findAll();
+    public List<Customer> getMsg() throws Exception {
+        return customerRepository.findAll();
+    }
 
-        Customer customer = customers.get(1);
-        String name = customer == null ? "no name" : customer.getFirstName();
+    @Transactional(rollbackFor = Exception.class)
+    public Customer addCustomer(String firstName, String lastName) throws Exception {
+        Customer customer = new Customer();
+        customer.setFirstName(firstName);
+        customer.setLastName(lastName);
+        Customer result = customerRepository.save(customer);
 
-        return String.format("hello %s", name);
+        return result;
     }
 }
