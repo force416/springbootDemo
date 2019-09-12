@@ -12,6 +12,7 @@ public class ErrorHandler {
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public JSend handle(Exception e) {
+        e.printStackTrace();
         return JSend.error("Internal server error");
     }
 

@@ -15,7 +15,7 @@ public class HelloService {
     @Autowired
     private CustomerRepository customerRepository;
 
-    public List<Customer> getMsg() throws Exception {
+    public List<Customer> getMsg() {
         return customerRepository.findAll();
     }
 

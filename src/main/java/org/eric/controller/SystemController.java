@@ -19,7 +19,7 @@ public class SystemController {
     @RequestMapping(path = {"/system/info"}, method = RequestMethod.GET)
     public String index() {
         List<String> versionList = Arrays.asList("1.0.0");
-
+        System.out.println("123113");
         return versionList.get(0);
     }
 
