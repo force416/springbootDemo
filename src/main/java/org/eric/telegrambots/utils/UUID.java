@@ -1,4 +1,4 @@
-package org.eric.utils;
+package org.eric.telegrambots.utils;
 
 public class UUID {
     public static String getRandomId() {

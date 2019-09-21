@@ -1,6 +1,6 @@
-package org.eric.controller;
+package org.eric.telegrambots.controller;
 
-import org.eric.utils.JSend;
+import org.eric.telegrambots.utils.JSend;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;

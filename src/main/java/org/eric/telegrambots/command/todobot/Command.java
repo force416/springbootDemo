@@ -1,10 +1,10 @@
-package org.eric.command;
+package org.eric.telegrambots.command.todobot;
 
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.model.request.ReplyKeyboardRemove;
 import com.pengrad.telegrambot.request.SendMessage;
-import org.eric.utils.SpringContext;
+import org.eric.telegrambots.utils.SpringContext;
 
 public abstract class Command {
     private final static String ADD_TASK_COMMAND = "/add_task";

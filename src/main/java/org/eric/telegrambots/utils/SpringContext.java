@@ -1,4 +1,4 @@
-package org.eric.utils;
+package org.eric.telegrambots.utils;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

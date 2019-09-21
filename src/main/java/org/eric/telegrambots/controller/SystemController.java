@@ -1,4 +1,4 @@
-package org.eric.controller;
+package org.eric.telegrambots.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

@@ -1,8 +1,8 @@
-package org.eric.service;
+package org.eric.telegrambots.service.todobot;
 
-import org.eric.Repository.TaskRepository;
-import org.eric.model.Task;
-import org.eric.utils.UUID;
+import org.eric.telegrambots.Repository.todobot.TaskRepository;
+import org.eric.telegrambots.model.todobot.Task;
+import org.eric.telegrambots.utils.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

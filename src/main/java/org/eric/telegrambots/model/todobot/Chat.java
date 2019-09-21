@@ -1,4 +1,4 @@
-package org.eric.model;
+package org.eric.telegrambots.model.todobot;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -1,4 +1,4 @@
-package org.eric;
+package org.eric.telegrambots;
 
 import com.pengrad.telegrambot.TelegramBot;
 import org.springframework.beans.factory.annotation.Value;

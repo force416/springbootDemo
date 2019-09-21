@@ -1,6 +1,6 @@
-package org.eric.Repository;
+package org.eric.telegrambots.Repository.todobot;
 
-import org.eric.model.Chat;
+import org.eric.telegrambots.model.todobot.Chat;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,10 +1,10 @@
-package org.eric.command;
+package org.eric.telegrambots.command.todobot;
 
 import com.pengrad.telegrambot.model.Update;
 import com.pengrad.telegrambot.request.SendMessage;
-import org.eric.model.Task;
-import org.eric.service.TaskService;
-import org.eric.utils.SpringContext;
+import org.eric.telegrambots.model.todobot.Task;
+import org.eric.telegrambots.service.todobot.TaskService;
+import org.eric.telegrambots.utils.SpringContext;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
-package org.eric.Repository;
+package org.eric.telegrambots.Repository.todobot;
 
-import org.eric.model.Task;
+import org.eric.telegrambots.model.todobot.Task;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

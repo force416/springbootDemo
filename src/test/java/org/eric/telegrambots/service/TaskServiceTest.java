@@ -1,8 +1,10 @@
-package org.eric.service;
+package org.eric.telegrambots.service;
 
 import org.eric.SuperTest;
-import org.eric.model.Task;
-import org.eric.model.Chat;
+import org.eric.telegrambots.model.todobot.Task;
+import org.eric.telegrambots.model.todobot.Chat;
+import org.eric.telegrambots.service.todobot.ChatService;
+import org.eric.telegrambots.service.todobot.TaskService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

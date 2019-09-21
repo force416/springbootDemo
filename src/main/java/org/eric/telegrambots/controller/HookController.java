@@ -1,11 +1,11 @@
-package org.eric.controller;
+package org.eric.telegrambots.controller;
 
 import com.pengrad.telegrambot.BotUtils;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
-import org.eric.command.Command;
-import org.eric.model.Chat;
-import org.eric.service.ChatService;
+import org.eric.telegrambots.command.todobot.Command;
+import org.eric.telegrambots.model.todobot.Chat;
+import org.eric.telegrambots.service.todobot.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,12 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Date;
 
 @RestController
+@RequestMapping("/api/telegram-bot-hook")
 public class HookController {
 
     @Autowired
     private ChatService chatService;
 
-    @RequestMapping(path = {"/bot/hook/eric_bot"}, method = RequestMethod.POST)
+    @RequestMapping(path = {"/todo-list-bot"}, method = RequestMethod.POST)
     public String hook(@RequestBody String payload) {
         Update update = BotUtils.parseUpdate(payload);
 
