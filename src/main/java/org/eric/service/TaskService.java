@@ -25,4 +25,17 @@ public class TaskService {
     public List<Task> getTodoTasks(long chatId) {
         return taskRepository.findTodoTasksByChatId(chatId);
     }
+
+    public List<Task> getDoneTasks(long chatId) {
+        return taskRepository.findDoneTasksByChatId(chatId);
+    }
+
+    public Task getTaskByHash(String hash) {
+        return taskRepository.findTaskByHash(hash);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public Task updateTask(Task task) {
+        return taskRepository.save(task);
+    }
 }

@@ -17,4 +17,13 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
             "ORDER BY t.createTime")
     List<Task> findTodoTasksByChatId(@Param("chatId") long chatId);
 
+    @Query("SELECT t " +
+            "FROM Task t " +
+            "WHERE t.chatId = :chatId AND t.deleted = false AND t.status = 'done' " +
+            "ORDER BY t.updateTime")
+    List<Task> findDoneTasksByChatId(@Param("chatId") long chatId);
+
+    @Query("SELECT t FROM Task t WHERE t.hash = :hash AND t.deleted = false")
+    Task findTaskByHash(@Param("hash") String hash);
+
 }

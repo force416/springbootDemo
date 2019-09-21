@@ -1,15 +1,41 @@
 package org.eric.command;
 
-import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.Update;
-import com.pengrad.telegrambot.request.SendMessage;
+import org.eric.model.Task;
+import org.eric.service.TaskService;
 import org.eric.utils.SpringContext;
+
+import java.util.Date;
 
 public class DeleteTaskCommand extends Command {
     @Override
     public void run(Update update) {
         long chatId = update.message().chat().id();
-        TelegramBot telegramBot = SpringContext.getBean(TelegramBot.class);
-        telegramBot.execute(new SendMessage(chatId, "delete task successful."));
+
+        // 分割每個欄位
+        String text = update.message().text();
+        String[] columns = text.split(" ");
+
+        // 檢查task hash
+        TaskService taskService = SpringContext.getBean(TaskService.class);
+        String hashId = columns.length >= 2 ? columns[1] : "";
+
+        Task task = taskService.getTaskByHash(hashId);
+        if (task == null) {
+            this.sendMsg(String.format("can't find task with [ %s ]", hashId), update);
+            return;
+        }
+
+        if (task.getChatId() != chatId) {
+            this.sendMsg(String.format("permission denied! you can't delete this task", hashId), update);
+            return;
+        }
+
+        task.setDeleted(true);
+        task.setUpdateTime(new Date());
+        taskService.updateTask(task);
+
+        this.sendMsg(String.format("delete task [ %s ] successful", hashId), update);
+
     }
 }

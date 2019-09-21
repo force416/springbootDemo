@@ -20,13 +20,15 @@ public class ListTodoTasksCommand extends Command {
                 .map((task) -> {
                     String hash = task.getHash();
                     String content = task.getContent();
-                    String status = task.getStatus();
                     return String.format("[ %s ] %s  \r\n", hash, content);
                 })
                 .reduce("", (str, content) -> {
                     return str + content;
                 });
 
+        if (rep == null || rep == "") {
+            rep = "you don't have todo tasks now, please use /add_task command to add task.";
+        }
         this.sendMsg(new SendMessage(chatId, rep)
                 .disableWebPagePreview(true));
     }
