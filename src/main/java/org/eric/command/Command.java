@@ -2,6 +2,7 @@ package org.eric.command;
 
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.Update;
+import com.pengrad.telegrambot.model.request.ReplyKeyboardRemove;
 import com.pengrad.telegrambot.request.SendMessage;
 import org.eric.utils.SpringContext;
 
@@ -14,8 +15,22 @@ public abstract class Command {
 
     public abstract void run(Update update);
 
+    protected static void sendMsg(String message, Update update) {
+        long chatId = update.message().chat().id();
+        TelegramBot telegramBot = SpringContext.getBean(TelegramBot.class);
+
+        telegramBot.execute(new SendMessage(chatId, message).replyMarkup(new ReplyKeyboardRemove()));
+    }
+
+    protected static void sendMsg(SendMessage sendMessage) {
+        TelegramBot telegramBot = SpringContext.getBean(TelegramBot.class);
+        telegramBot.execute(sendMessage.replyMarkup(new ReplyKeyboardRemove()));
+    }
+
     public static void dispatch(Update update) {
         String text = update.message().text();
+        text = text == null ? "" : text;
+
         String[] texts = text.split(" ");
         String action = texts[0];
 

@@ -5,10 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.Date;
 
 @Entity
-@Table(name = "users")
-public class User implements Serializable {
+@Table(name = "chats")
+public class Chat implements Serializable {
     @Id
     private long id;
 
@@ -20,6 +21,9 @@ public class User implements Serializable {
 
     @Column(name = "username")
     private String username;
+
+    @Column(name = "create_time", columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
+    private Date createTime;
 
     public long getId() {
         return id;
@@ -51,5 +55,13 @@ public class User implements Serializable {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }
