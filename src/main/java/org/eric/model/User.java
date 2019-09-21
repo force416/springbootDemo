@@ -1,13 +1,15 @@
 package org.eric.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "customer")
-public class Customer implements Serializable {
+@Table(name = "users")
+public class User implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @Column(name = "first_name")
@@ -16,11 +18,8 @@ public class Customer implements Serializable {
     @Column(name = "last_name")
     private String lastName;
 
-    public Customer(){}
-
-    public Customer(long id) {
-        this.id = id;
-    }
+    @Column(name = "username")
+    private String username;
 
     public long getId() {
         return id;
@@ -44,5 +43,13 @@ public class Customer implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }
