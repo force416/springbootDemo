@@ -54,12 +54,28 @@ public abstract class Command {
             default:
                 long chatId = update.message().chat().id();
                 TelegramBot telegramBot = SpringContext.getBean(TelegramBot.class);
-                telegramBot.execute(new SendMessage(chatId, "please input correct commands."));
+                telegramBot.execute(getHelpMsg(chatId));
                 break;
         }
 
         if (cmd != null) {
             cmd.run(update);
         }
+    }
+
+    protected static SendMessage getHelpMsg(long chatId) {
+        String desc = "Use this format to create task:\n" +
+                "/add_task text\n" +
+                "\n" +
+                "Use this format to delete task:\n" +
+                "/delete_task hashId\n" +
+                "\n" +
+                "Use /list_todo_tasks to list todo tasks:\n" +
+                "\n" +
+                "Use /list_done_tasks to list completed tasks:\n" +
+                "\n" +
+                "Use this format to set task completed:\n" +
+                "/set_task_done hashId\n";
+        return new SendMessage(chatId, desc);
     }
 }
