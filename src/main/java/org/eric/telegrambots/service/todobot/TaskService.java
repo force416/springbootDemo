@@ -4,10 +4,14 @@ import org.eric.telegrambots.Repository.todobot.TaskRepository;
 import org.eric.telegrambots.model.todobot.Task;
 import org.eric.telegrambots.utils.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service("taskService")
 public class TaskService {
@@ -23,11 +27,13 @@ public class TaskService {
     }
 
     public List<Task> getTodoTasks(long chatId) {
-        return taskRepository.findTodoTasksByChatId(chatId);
+        Page<Task> queryResult = taskRepository.findTodoTasksByChatId(chatId, PageRequest.of(0,500));
+        return queryResult.get().collect(Collectors.toList());
     }
 
     public List<Task> getDoneTasks(long chatId) {
-        return taskRepository.findDoneTasksByChatId(chatId);
+        Page<Task> queryResult = taskRepository.findDoneTasksByChatId(chatId, PageRequest.of(0,500));
+        return queryResult.get().collect(Collectors.toList());
     }
 
     public Task getTaskByHash(String hash) {

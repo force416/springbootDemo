@@ -7,11 +7,11 @@ import com.pengrad.telegrambot.request.SendMessage;
 import org.eric.telegrambots.utils.SpringContext;
 
 public abstract class Command {
-    private final static String ADD_TASK_COMMAND = "/add_task";
-    private final static String DELETE_TASK_COMMAND = "/delete_task";
-    private final static String LIST_TODO_TASK_COMMAND = "/list_todo_tasks";
-    private final static String LIST_DONE_TASK_COMMAND = "/list_done_tasks";
-    private final static String SET_TASK_DONE_COMMAND = "/set_task_done";
+    protected final static String ADD_TASK_COMMAND = "/add_task";
+    protected final static String DELETE_TASK_COMMAND = "/delete_task";
+    protected final static String LIST_TODO_TASK_COMMAND = "/list_todo_tasks";
+    protected final static String LIST_DONE_TASK_COMMAND = "/list_done_tasks";
+    protected final static String SET_TASK_DONE_COMMAND = "/set_task_done";
 
     public abstract void run(Update update);
 

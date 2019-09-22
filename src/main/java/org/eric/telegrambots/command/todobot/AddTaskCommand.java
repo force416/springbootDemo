@@ -5,7 +5,9 @@ import org.eric.telegrambots.model.todobot.Task;
 import org.eric.telegrambots.service.todobot.TaskService;
 import org.eric.telegrambots.utils.SpringContext;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.stream.Collectors;
 
 public class AddTaskCommand extends Command {
 
@@ -17,7 +19,10 @@ public class AddTaskCommand extends Command {
         String[] columns = text.split(" ");
 
         // 檢查content字數
-        String taskContent = columns.length >= 2 ? columns[1] : "";
+        String taskContent = columns.length >= 2 ?
+                Arrays.stream(columns)
+                        .filter((column)->!column.equals(Command.ADD_TASK_COMMAND))
+                        .collect(Collectors.joining(" ")) : "";
         boolean check = this.checkContent(taskContent, update);
         if (!check) {
             return;
