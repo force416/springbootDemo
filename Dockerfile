@@ -6,4 +6,4 @@ RUN ["mvn","package","-Dmaven.test.skip=true"]
 FROM openjdk:8-jdk-alpine
 WORKDIR /usr/src/myapp
 COPY --from=builder /usr/src/app/target/*.jar app.jar
-CMD tail -f /dev/null
+CMD ["java", "-jar", "app.jar", "--spring.profiles.active=prod"]
