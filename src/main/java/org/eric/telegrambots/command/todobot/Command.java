@@ -64,18 +64,20 @@ public abstract class Command {
     }
 
     protected static SendMessage getHelpMsg(long chatId) {
-        String desc = "Use this format to create task:\n" +
-                "/add_task text\n" +
-                "\n" +
-                "Use this format to delete task:\n" +
-                "/delete_task hashId\n" +
-                "\n" +
-                "Use /list_todo_tasks to list todo tasks:\n" +
-                "\n" +
-                "Use /list_done_tasks to list completed tasks:\n" +
-                "\n" +
-                "Use this format to set task completed:\n" +
-                "/set_task_done hashId\n";
-        return new SendMessage(chatId, desc);
+        StringBuilder builder = new StringBuilder();
+        builder.append("Use this format to create task:\n");
+        builder.append("/add_task text\n");
+        builder.append("\n");
+        builder.append("Use this format to delete task:\n");
+        builder.append("/delete_task hashId\n");
+        builder.append("\n");
+        builder.append("Use /list_todo_tasks to list todo tasks:\n");
+        builder.append("\n");
+        builder.append("Use /list_done_tasks to list completed tasks:\n");
+        builder.append("\n");
+        builder.append("Use this format to set task completed:\n");
+        builder.append("/set_task_done hashId\n");
+
+        return new SendMessage(chatId, builder.toString());
     }
 }
