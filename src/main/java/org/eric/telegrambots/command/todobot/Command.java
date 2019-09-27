@@ -6,12 +6,25 @@ import com.pengrad.telegrambot.model.request.ReplyKeyboardRemove;
 import com.pengrad.telegrambot.request.SendMessage;
 import org.eric.telegrambots.utils.SpringContext;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public abstract class Command {
     protected final static String ADD_TASK_COMMAND = "/add_task";
     protected final static String DELETE_TASK_COMMAND = "/delete_task";
     protected final static String LIST_TODO_TASK_COMMAND = "/list_todo_tasks";
     protected final static String LIST_DONE_TASK_COMMAND = "/list_done_tasks";
     protected final static String SET_TASK_DONE_COMMAND = "/set_task_done";
+
+    private static Map<String, Command> commandMap = new HashMap<>();
+
+    static {
+        commandMap.put(ADD_TASK_COMMAND, new AddTaskCommand());
+        commandMap.put(DELETE_TASK_COMMAND, new DeleteTaskCommand());
+        commandMap.put(LIST_TODO_TASK_COMMAND, new ListTodoTasksCommand());
+        commandMap.put(LIST_DONE_TASK_COMMAND, new ListDoneTasksCommand());
+        commandMap.put(SET_TASK_DONE_COMMAND, new SetTaskDoneCommand());
+    }
 
     public abstract void run(Update update);
 
@@ -34,33 +47,14 @@ public abstract class Command {
         String[] texts = text.split(" ");
         String action = texts[0];
 
-        Command cmd = null;
-        switch (action) {
-            case ADD_TASK_COMMAND:
-                cmd = new AddTaskCommand();
-                break;
-            case DELETE_TASK_COMMAND:
-                cmd = new DeleteTaskCommand();
-                break;
-            case LIST_TODO_TASK_COMMAND:
-                cmd = new ListTodoTasksCommand();
-                break;
-            case LIST_DONE_TASK_COMMAND:
-                cmd = new ListDoneTasksCommand();
-                break;
-            case SET_TASK_DONE_COMMAND:
-                cmd = new SetTaskDoneCommand();
-                break;
-            default:
-                long chatId = update.message().chat().id();
-                TelegramBot telegramBot = SpringContext.getBean(TelegramBot.class);
-                telegramBot.execute(getHelpMsg(chatId));
-                break;
+        Command cmd = commandMap.get(action);
+        if (cmd == null) {
+            long chatId = update.message().chat().id();
+            TelegramBot telegramBot = SpringContext.getBean(TelegramBot.class);
+            telegramBot.execute(getHelpMsg(chatId));
         }
 
-        if (cmd != null) {
-            cmd.run(update);
-        }
+        cmd.run(update);
     }
 
     protected static SendMessage getHelpMsg(long chatId) {
