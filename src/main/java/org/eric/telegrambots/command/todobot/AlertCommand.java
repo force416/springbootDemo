@@ -31,9 +31,7 @@ public class AlertCommand extends Command {
 
         // get content
         columns = this.removeArrayIndex(columns, 0);
-        System.out.println(Arrays.toString(columns));
         String content = columns.length >= 1 ? Arrays.stream(columns).collect(Collectors.joining(" ")) : "";
-        System.out.println(content);
 
         Alert alert = new Alert();
         alert.setChatId(chatId);
