@@ -21,10 +21,19 @@ public class AlertCommand extends Command {
 
         columns = this.removeArrayIndex(columns, 0);
         String time = columns.length > 1 ? columns[0] : "";
+
+        // valid time
+        if (!this.checkTime(time, update)) {
+            return;
+        }
+        // get date
         Date alertDate = this.getAlertDate(time);
 
+        // get content
         columns = this.removeArrayIndex(columns, 0);
-        String content = columns.length > 1 ? Arrays.stream(columns).collect(Collectors.joining(" ")) : "";
+        System.out.println(Arrays.toString(columns));
+        String content = columns.length >= 1 ? Arrays.stream(columns).collect(Collectors.joining(" ")) : "";
+        System.out.println(content);
 
         Alert alert = new Alert();
         alert.setChatId(chatId);
@@ -37,10 +46,6 @@ public class AlertCommand extends Command {
     }
 
     private Date getAlertDate(String time) {
-        boolean match = time.matches("^\\d{1,2}(m|h|M|y)$");
-        if (!match) {
-            return null;
-        }
 
         String[] timeSplit = time.split("(?=(m|h|M|y))");
         int num = Integer.parseInt(timeSplit[0]);
@@ -77,5 +82,13 @@ public class AlertCommand extends Command {
         }
         return newArrays;
     }
-    
+
+    private boolean checkTime(String time, Update update) {
+        boolean match = time.matches("^\\d{1,2}(m|h|M|y)$");
+        if (!match) {
+            sendMsg("please input correct time format", update);
+        }
+        return match;
+    }
+
 }
