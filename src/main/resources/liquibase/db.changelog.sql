@@ -8,7 +8,7 @@ create table if not exists chats (
     username varchar(255),
     create_time TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
---rollback drop table customer;
+--rollback drop table chats;
 
 create table if not exists tasks (
     id SERIAL NOT NULL primary key,
@@ -20,4 +20,13 @@ create table if not exists tasks (
     create_time TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     update_time TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
---rollback drop table customer;
+--rollback drop table tasks;
+
+create table if not exists alerts (
+    id SERIAL NOT NULL primary key,
+    chat_id INTEGER NOT NULL REFERENCES chats(id),
+    content varchar(255) NOT NULL,
+    alert_time TIMESTAMP WITHOUT TIME ZONE NOT NULL,
+    create_time TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+--rollback drop table alerts;

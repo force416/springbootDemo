@@ -15,6 +15,7 @@ public abstract class Command {
     protected final static String LIST_TODO_TASK_COMMAND = "/list_todo_tasks";
     protected final static String LIST_DONE_TASK_COMMAND = "/list_done_tasks";
     protected final static String SET_TASK_DONE_COMMAND = "/set_task_done";
+    protected final static String ALERT_COMMAND = "/alert";
 
     private static Map<String, Command> commandMap = new HashMap<>();
 
@@ -24,6 +25,7 @@ public abstract class Command {
         commandMap.put(LIST_TODO_TASK_COMMAND, new ListTodoTasksCommand());
         commandMap.put(LIST_DONE_TASK_COMMAND, new ListDoneTasksCommand());
         commandMap.put(SET_TASK_DONE_COMMAND, new SetTaskDoneCommand());
+        commandMap.put(ALERT_COMMAND, new AlertCommand());
     }
 
     public abstract void run(Update update);
