@@ -31,9 +31,9 @@ create table if not exists alerts (
 );
 --rollback drop table alerts;
 
-carete table if not exists boards (
+create table if not exists boards (
     id SERIAL NOT NULL primary key,
-    name varchar(50) NOT NULL,
+    name varchar(50) NOT NULL
 );
 --rollback drop table boards;
 
