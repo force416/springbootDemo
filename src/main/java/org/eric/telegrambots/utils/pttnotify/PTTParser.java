@@ -10,67 +10,96 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class PTTParser {
     private final static String BOARD_URL_FORMAT = "https://www.ptt.cc/bbs/%s/index.html";
-    private final static String PTT_BASE_URL = "https://www.ptt.cc%s";
+    private final static String PTT_BASE_URL_FORMAT = "https://www.ptt.cc%s";
 
-    private static List<Post> getPosts(String board, int limitPage) {
-        return getPostsRecursion(board, limitPage, null, null);
+    private String board;
+
+    private PTTParser() {
     }
 
-    private static List<Post> getPostsRecursion(String board, int limitPage, String prevPageUrl, List<Post> acc) {
+    public PTTParser(String board) {
+        this.board = board;
+    }
+
+    public List<Post> getPosts(int limitPage, int limitLike) {
+        return getPostsRecursion(this.board, limitPage, limitLike, null, null);
+    }
+
+    private List<Post> getPostsRecursion(String board, int limitPage, int limitLike, String prevPageUrl, List<Post> acc) {
         if (limitPage == 0) {
+            acc.sort(Comparator.comparingLong(Post::getId));
             return acc;
         }
 
-        String fullUrl = prevPageUrl == null ? String.format(BOARD_URL_FORMAT, board) : String.format(PTT_BASE_URL, prevPageUrl);
+        String fullUrl = prevPageUrl == null ? String.format(BOARD_URL_FORMAT, board) : String.format(PTT_BASE_URL_FORMAT, prevPageUrl);
         acc = acc == null ? new ArrayList<Post>() : acc;
 
+        Document doc;
         try {
-            Document doc = Jsoup.connect(fullUrl)
-                    .cookie("over18", "1")
-                    .get();
-
-            // 下一頁的按鈕 url
-            String prevUrl = doc.body()
-                    .select(".btn-group.btn-group-paging a[href]").get(1)
-                    .attr("href");
-
-            // 爬出文章的 url title like
-            Elements elements = doc.body().select("div.r-ent");
-            List<Post> urls = elements.stream()
-                    .filter((element) -> element.select(".title a").size() > 0)
-                    .map((element) -> {
-                        String like = element.select(".nrec span").text();
-                        String url = element.select(".title a").attr("href");
-                        long id = Integer.parseInt(url.split("\\.")[1]);
-
-                        Post post = new Post();
-                        post.setId(id);
-                        post.setUrl(url);
-                        post.setTitle(element.select(".title a").text());
-                        post.setLike(StringUtil.isBlank(like) ? 0 : Integer.parseInt(like));
-
-                        return post;
-                    }).collect(Collectors.toList());
-
-            acc.addAll(urls);
-            limitPage--;
-
-            return getPostsRecursion(board, limitPage, prevUrl, acc);
-
+            // 需加入cookie 跳過滿18歲的確認
+            doc = Jsoup.connect(fullUrl).cookie("over18", "1").get();
         } catch (IOException e) {
-            throw new NotFoundException("Can't find ptt board");
+            throw new NotFoundException(String.format("Can't find ptt board: %s", this.board));
         }
+
+        // 下一頁的按鈕 url
+        String prevUrl = doc.body()
+                .select(".btn-group.btn-group-paging a[href]").get(1)
+                .attr("href");
+
+        // 爬出文章的 url title like
+        Elements elements = doc.body().select("div.r-ent");
+        List<Post> urls = elements.stream()
+                .filter((element) -> element.select(".title a").size() > 0) // filter 被刪除的文章
+                .filter((element) -> this.getLikeFromElement(element) > limitLike) // filter 推文數
+                .map((element) -> {
+                    int like = this.getLikeFromElement(element);
+                    String url = element.select(".title a").attr("href");
+                    long id = Integer.parseInt(url.split("\\.")[1]);
+
+                    Post post = new Post();
+                    post.setBoard(this.board);
+                    post.setId(id);
+                    post.setUrl(String.format(PTT_BASE_URL_FORMAT, url));
+                    post.setTitle(element.select(".title a").text());
+                    post.setLike(like);
+
+                    return post;
+                }).collect(Collectors.toList());
+
+        acc.addAll(urls);
+        limitPage--;
+
+        return getPostsRecursion(board, limitPage, limitLike, prevUrl, acc);
 
     }
 
+    private int getLikeFromElement(Element element) {
+        int result;
+        String like = element.select(".nrec span").text();
+        if (like.equals("爆")) {
+            result = 999;
+        } else if (like.startsWith("X")) {
+            result = -1;
+        } else {
+            result = StringUtil.isBlank(like) ? 0 : Integer.parseInt(like);
+        }
+
+        return result;
+    }
+
     public static void main(String[] args) {
-        List<Post> urls = PTTParser.getPosts("Gossiping", 3);
-        urls.stream().forEach((post) -> {
+        PTTParser pttParser = new PTTParser("Beauty");
+        List<Post> posts = pttParser.getPosts(3, 0);
+
+        posts.stream().forEach((post) -> {
+            System.out.println(post.getBoard());
             System.out.println(post.getId());
             System.out.println(post.getLike());
             System.out.println(post.getTitle());

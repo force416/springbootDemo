@@ -10,10 +10,10 @@
         <module name="telegram-bots" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel target="8" />
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="helloworld" options="-parameters" />
       <module name="telegram-bots" options="-parameters" />
     </option>
   </component>

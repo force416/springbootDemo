@@ -5,6 +5,8 @@ import java.io.Serializable;
 public class Post implements Serializable {
     private long id;
 
+    private String board;
+
     private String url;
 
     private String title;
@@ -41,5 +43,13 @@ public class Post implements Serializable {
 
     public void setLike(int like) {
         this.like = like;
+    }
+
+    public String getBoard() {
+        return board;
+    }
+
+    public void setBoard(String board) {
+        this.board = board;
     }
 }
