@@ -30,3 +30,18 @@ create table if not exists alerts (
     create_time TIMESTAMP WITHOUT TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 --rollback drop table alerts;
+
+carete table if not exists boards (
+    id SERIAL NOT NULL primary key,
+    name varchar(50) NOT NULL,
+);
+--rollback drop table boards;
+
+create table if not exists chats_boards (
+    id SERIAL NOT NULL primary key,
+    chat_id INTEGER NOT NULL REFERENCES chats(id),
+    board_id INTEGER NOT NULL REFERENCES boards(id),
+    like_limit INTEGER NOT NULL DEFAULT 0,
+    last_notify_post_id bigint NOT NULL DEFAULT 0
+);
+--rollback drop table chats_boards;
