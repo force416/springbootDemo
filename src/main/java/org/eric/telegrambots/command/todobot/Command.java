@@ -54,6 +54,7 @@ public abstract class Command {
             long chatId = update.message().chat().id();
             TelegramBot telegramBot = (TelegramBot) SpringContext.getBean("todoBot");
             telegramBot.execute(getHelpMsg(chatId));
+            return;
         }
 
         cmd.run(update);
