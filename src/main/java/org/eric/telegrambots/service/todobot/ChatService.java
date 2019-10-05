@@ -1,6 +1,6 @@
 package org.eric.telegrambots.service.todobot;
 
-import org.eric.telegrambots.Repository.todobot.ChatRepository;
+import org.eric.telegrambots.repository.todobot.ChatRepository;
 import org.eric.telegrambots.model.todobot.Chat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

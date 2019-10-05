@@ -2,8 +2,8 @@ package org.eric.telegrambots.service.todobot;
 
 import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.request.SendMessage;
-import org.eric.telegrambots.Repository.todobot.AlertRepository;
 import org.eric.telegrambots.model.todobot.Alert;
+import org.eric.telegrambots.repository.todobot.AlertRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

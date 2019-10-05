@@ -107,7 +107,7 @@ public class PTTParser {
 
     public static void main(String[] args) {
         PTTParser pttParser = new PTTParser("Beauty");
-        List<Post> posts = pttParser.getPosts(1, 0);
+        List<Post> posts = pttParser.getPosts(10, 0);
 
         posts.stream().forEach((post) -> {
             System.out.println(post.getBoard());

@@ -1,12 +1,11 @@
 package org.eric.telegrambots.service.todobot;
 
-import org.eric.telegrambots.Repository.todobot.TaskRepository;
+import org.eric.telegrambots.repository.todobot.TaskRepository;
 import org.eric.telegrambots.model.todobot.Task;
 import org.eric.telegrambots.utils.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -9,7 +9,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication
 @EnableScheduling
-public class App 
+public class Application
 {
     @Bean
     public TelegramBot getBot(@Value("${telegram.bot.token}") String token) {
@@ -17,6 +17,6 @@ public class App
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(App.class, args);
+        SpringApplication.run(Application.class, args);
     }
 }

@@ -1,4 +1,4 @@
-package org.eric.telegrambots.Repository.todobot;
+package org.eric.telegrambots.repository.todobot;
 
 import org.eric.telegrambots.model.todobot.Task;
 import org.springframework.data.domain.Page;

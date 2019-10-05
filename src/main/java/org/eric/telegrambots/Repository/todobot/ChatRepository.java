@@ -1,4 +1,4 @@
-package org.eric.telegrambots.Repository.todobot;
+package org.eric.telegrambots.repository.todobot;
 
 import org.eric.telegrambots.model.todobot.Chat;
 import org.springframework.data.jpa.repository.JpaRepository;

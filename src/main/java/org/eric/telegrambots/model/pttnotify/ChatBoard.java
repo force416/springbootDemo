@@ -15,11 +15,9 @@ public class ChatBoard implements Serializable {
     private long id;
 
     @OneToOne
-    @Column(name = "chat_id")
     private Chat chat;
 
     @OneToOne
-    @Column(name = "board_id")
     private Board board;
 
     @Column(name = "like_limit")
