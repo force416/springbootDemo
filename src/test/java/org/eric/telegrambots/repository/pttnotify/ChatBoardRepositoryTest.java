@@ -41,6 +41,8 @@ public class ChatBoardRepositoryTest extends SuperTest {
         ChatBoard chatBoard = new ChatBoard();
         chatBoard.setBoard(board);
         chatBoard.setChat(chat);
+        chatBoard.setLastNotifyPostId(12345678);
+        chatBoard.setLikeLimit(50);
         chatBoard = chatBoardRepository.save(chatBoard);
 
         Optional<ChatBoard> chatBoardOpt = chatBoardRepository.findById(chatBoard.getId());

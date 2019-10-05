@@ -24,7 +24,7 @@ public class ChatBoard implements Serializable {
     private int likeLimit;
 
     @Column(name = "last_notify_post_id")
-    private int lastNotifyPostId;
+    private long lastNotifyPostId;
 
     public long getId() {
         return id;
@@ -58,11 +58,11 @@ public class ChatBoard implements Serializable {
         this.likeLimit = likeLimit;
     }
 
-    public int getLastNotifyPostId() {
+    public long getLastNotifyPostId() {
         return lastNotifyPostId;
     }
 
-    public void setLastNotifyPostId(int lastNotifyPostId) {
+    public void setLastNotifyPostId(long lastNotifyPostId) {
         this.lastNotifyPostId = lastNotifyPostId;
     }
 }

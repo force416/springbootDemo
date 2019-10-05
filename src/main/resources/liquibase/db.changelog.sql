@@ -33,7 +33,7 @@ create table if not exists alerts (
 
 create table if not exists boards (
     id SERIAL NOT NULL primary key,
-    name varchar(50) NOT NULL
+    name varchar(50) NOT NULL UNIQUE
 );
 --rollback drop table boards;
 
@@ -42,6 +42,7 @@ create table if not exists chats_boards (
     chat_id INTEGER NOT NULL REFERENCES chats(id),
     board_id INTEGER NOT NULL REFERENCES boards(id),
     like_limit INTEGER NOT NULL DEFAULT 0,
-    last_notify_post_id bigint NOT NULL DEFAULT 0
+    last_notify_post_id bigint NOT NULL DEFAULT 0,
+    UNIQUE (chat_id, board_id)
 );
 --rollback drop table chats_boards;
