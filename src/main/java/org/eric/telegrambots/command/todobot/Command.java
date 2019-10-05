@@ -32,13 +32,13 @@ public abstract class Command {
 
     protected static void sendMsg(String message, Update update) {
         long chatId = update.message().chat().id();
-        TelegramBot telegramBot = SpringContext.getBean(TelegramBot.class);
+        TelegramBot telegramBot = (TelegramBot) SpringContext.getBean("todoBot");
 
         telegramBot.execute(new SendMessage(chatId, message).replyMarkup(new ReplyKeyboardRemove()));
     }
 
     protected static void sendMsg(SendMessage sendMessage) {
-        TelegramBot telegramBot = SpringContext.getBean(TelegramBot.class);
+        TelegramBot telegramBot = (TelegramBot) SpringContext.getBean("todoBot");
         telegramBot.execute(sendMessage.replyMarkup(new ReplyKeyboardRemove()));
     }
 
@@ -52,7 +52,7 @@ public abstract class Command {
         Command cmd = commandMap.get(action);
         if (cmd == null) {
             long chatId = update.message().chat().id();
-            TelegramBot telegramBot = SpringContext.getBean(TelegramBot.class);
+            TelegramBot telegramBot = (TelegramBot) SpringContext.getBean("todoBot");
             telegramBot.execute(getHelpMsg(chatId));
         }
 
