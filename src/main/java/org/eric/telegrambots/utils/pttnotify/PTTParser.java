@@ -106,16 +106,16 @@ public class PTTParser {
     }
 
     public static void main(String[] args) {
-        PTTParser pttParser = new PTTParser("Beauty");
-        List<Post> posts = pttParser.getPosts(10, 0);
+        Document doc = null;
+        try {
+            doc = Jsoup.connect("https://www.ptt.cc/bbs/hotboards.html").cookie("over18", "1").get();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-        posts.stream().forEach((post) -> {
-            System.out.println(post.getBoard());
-            System.out.println(post.getId());
-            System.out.println(post.getLike());
-            System.out.println(post.getTitle());
-            System.out.println(post.getUrl());
-            System.out.println("=============");
+        doc.body().select(".board-name").stream().forEach((element) -> {
+            String boardName = element.text();
+            System.out.println(String.format("INSERT INTO boards (name) VALUES ('%s');", boardName.toLowerCase()));
         });
     }
 }

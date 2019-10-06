@@ -23,6 +23,8 @@ public class SubscribeCommand extends PTTNotifyBotCommand {
         if (boardName == null) {
             sendMsg("Please input correct board name.", update);
             return;
+        } else {
+            boardName = boardName.toLowerCase();
         }
 
         NotifyService notifyService = SpringContext.getBean(NotifyService.class);
