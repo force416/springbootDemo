@@ -8,7 +8,7 @@ import org.eric.telegrambots.utils.SpringContext;
 
 import java.util.List;
 
-public class ListTodoTasksCommand extends Command {
+public class ListTodoTasksCommand extends TodoListBotCommand {
     @Override
     public void run(Update update) {
         long chatId = update.message().chat().id();

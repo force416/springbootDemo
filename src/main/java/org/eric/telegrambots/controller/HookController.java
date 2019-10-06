@@ -3,7 +3,8 @@ package org.eric.telegrambots.controller;
 import com.pengrad.telegrambot.BotUtils;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
-import org.eric.telegrambots.command.todobot.Command;
+import org.eric.telegrambots.command.pttnotify.PTTNotifyBotCommand;
+import org.eric.telegrambots.command.todobot.TodoListBotCommand;
 import org.eric.telegrambots.model.todobot.Chat;
 import org.eric.telegrambots.service.todobot.ChatService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,7 @@ public class HookController {
     private ChatService chatService;
 
     @RequestMapping(path = {"/todo-list-bot"}, method = RequestMethod.POST)
-    public String hook(@RequestBody String payload) {
+    public String todoListHook(@RequestBody String payload) {
         Update update = BotUtils.parseUpdate(payload);
 
         // check
@@ -35,7 +36,22 @@ public class HookController {
         chatService.addChat(chat);
 
         // command dispatch
-        Command.dispatch(update);
+        TodoListBotCommand.dispatch(update);
+
+        return "OK";
+    }
+
+    @RequestMapping(path = {"/ptt-notify-bot"}, method = RequestMethod.POST)
+    public String pttNotifyHook(@RequestBody String payload) {
+        Update update = BotUtils.parseUpdate(payload);
+
+        // check
+        if (!this.checkMessage(update)) {
+            return "NOT OK";
+        };
+
+        // command dispatch
+        PTTNotifyBotCommand.dispatch(update);
 
         return "OK";
     }

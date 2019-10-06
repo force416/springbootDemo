@@ -12,14 +12,12 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 public class Application
 {
-    @Bean
-    @Qualifier("todoBot")
+    @Bean("todoBot")
     public TelegramBot getToDoBot(@Value("${telegram.bot.todoBot.token}") String token) {
         return new TelegramBot(token);
     }
 
-    @Bean
-    @Qualifier("pttNotifyBot")
+    @Bean("pttNotifyBot")
     public TelegramBot getPTTNotifyBot(@Value("${telegram.bot.pttNotifyBot.token}") String token) {
         return new TelegramBot(token);
     }

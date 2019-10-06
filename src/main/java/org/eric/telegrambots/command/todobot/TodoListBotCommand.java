@@ -9,7 +9,7 @@ import org.eric.telegrambots.utils.SpringContext;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Command {
+public abstract class TodoListBotCommand {
     protected final static String ADD_TASK_COMMAND = "/add_task";
     protected final static String DELETE_TASK_COMMAND = "/delete_task";
     protected final static String LIST_TODO_TASK_COMMAND = "/list_todo_tasks";
@@ -17,7 +17,7 @@ public abstract class Command {
     protected final static String SET_TASK_DONE_COMMAND = "/set_task_done";
     protected final static String ALERT_COMMAND = "/alert";
 
-    private static Map<String, Command> commandMap = new HashMap<>();
+    private static Map<String, TodoListBotCommand> commandMap = new HashMap<>();
 
     static {
         commandMap.put(ADD_TASK_COMMAND, new AddTaskCommand());
@@ -32,14 +32,16 @@ public abstract class Command {
 
     protected static void sendMsg(String message, Update update) {
         long chatId = update.message().chat().id();
-        TelegramBot telegramBot = (TelegramBot) SpringContext.getBean("todoBot");
-
-        telegramBot.execute(new SendMessage(chatId, message).replyMarkup(new ReplyKeyboardRemove()));
+        getTelegramBot().execute(
+                new SendMessage(chatId, message)
+                        .replyMarkup(new ReplyKeyboardRemove())
+        );
     }
 
     protected static void sendMsg(SendMessage sendMessage) {
-        TelegramBot telegramBot = (TelegramBot) SpringContext.getBean("todoBot");
-        telegramBot.execute(sendMessage.replyMarkup(new ReplyKeyboardRemove()));
+        getTelegramBot().execute(
+                sendMessage.replyMarkup(new ReplyKeyboardRemove())
+        );
     }
 
     public static void dispatch(Update update) {
@@ -49,11 +51,10 @@ public abstract class Command {
         String[] texts = text.split(" ");
         String action = texts[0];
 
-        Command cmd = commandMap.get(action);
+        TodoListBotCommand cmd = commandMap.get(action);
         if (cmd == null) {
             long chatId = update.message().chat().id();
-            TelegramBot telegramBot = (TelegramBot) SpringContext.getBean("todoBot");
-            telegramBot.execute(getHelpMsg(chatId));
+            getTelegramBot().execute(getHelpMsg(chatId));
             return;
         }
 
@@ -63,18 +64,25 @@ public abstract class Command {
     protected static SendMessage getHelpMsg(long chatId) {
         StringBuilder builder = new StringBuilder();
         builder.append("Use this format to create task:\n");
-        builder.append("/add_task text\n");
+        builder.append("/add_task <text> \n");
         builder.append("\n");
         builder.append("Use this format to delete task:\n");
-        builder.append("/delete_task hashId\n");
+        builder.append("/delete_task <hashId> \n");
         builder.append("\n");
         builder.append("Use /list_todo_tasks to list todo tasks:\n");
         builder.append("\n");
         builder.append("Use /list_done_tasks to list completed tasks:\n");
         builder.append("\n");
         builder.append("Use this format to set task completed:\n");
-        builder.append("/set_task_done hashId\n");
+        builder.append("/set_task_done <hashId> \n");
+        builder.append("\n");
+        builder.append("Use this format add alert:\n");
+        builder.append("/alert <time> <text> \n");
 
         return new SendMessage(chatId, builder.toString());
+    }
+
+    protected static TelegramBot getTelegramBot() {
+        return (TelegramBot) SpringContext.getBean("todoBot");
     }
 }

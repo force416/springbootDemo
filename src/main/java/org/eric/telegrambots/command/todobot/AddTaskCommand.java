@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.stream.Collectors;
 
-public class AddTaskCommand extends Command {
+public class AddTaskCommand extends TodoListBotCommand {
 
     @Override
     public void run(Update update) {
@@ -21,7 +21,7 @@ public class AddTaskCommand extends Command {
         // 檢查content字數
         String taskContent = columns.length >= 2 ?
                 Arrays.stream(columns)
-                        .filter((column)->!column.equals(Command.ADD_TASK_COMMAND))
+                        .filter((column)->!column.equals(TodoListBotCommand.ADD_TASK_COMMAND))
                         .collect(Collectors.joining(" ")) : "";
         boolean check = this.checkContent(taskContent, update);
         if (!check) {

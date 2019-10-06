@@ -32,11 +32,21 @@ public class NotifyService {
 
         Optional<Chat> chatOptional = chatRepository.findById(chatId);
 
-        ChatBoard chatBoard = new ChatBoard();
-        chatBoard.setChat(chatOptional.get());
-        chatBoard.setBoard(boardOptional.get());
-        chatBoard.setLikeLimit(likeLimit);
-        chatBoard.setLastNotifyPostId(0L);
+        Optional<ChatBoard> chatBoardOptional = chatBoardRepository
+                .findByChatIdAndBoardId(chatOptional.get().getId(), boardOptional.get().getId());
+
+        // add or update
+        ChatBoard chatBoard;
+        if (chatBoardOptional.isPresent()) {
+            chatBoard = chatBoardOptional.get();
+            chatBoard.setLikeLimit(likeLimit);
+        } else {
+            chatBoard = new ChatBoard();
+            chatBoard.setChat(chatOptional.get());
+            chatBoard.setBoard(boardOptional.get());
+            chatBoard.setLikeLimit(likeLimit);
+            chatBoard.setLastNotifyPostId(0L);
+        }
         chatBoard = chatBoardRepository.save(chatBoard);
 
         return chatBoard;

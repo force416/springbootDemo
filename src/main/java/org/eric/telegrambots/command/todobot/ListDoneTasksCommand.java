@@ -9,7 +9,7 @@ import org.eric.telegrambots.utils.SpringContext;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class ListDoneTasksCommand extends Command {
+public class ListDoneTasksCommand extends TodoListBotCommand {
     @Override
     public void run(Update update) {
         long chatId = update.message().chat().id();

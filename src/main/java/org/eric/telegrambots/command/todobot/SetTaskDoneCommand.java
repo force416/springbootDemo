@@ -7,7 +7,7 @@ import org.eric.telegrambots.utils.SpringContext;
 
 import java.util.Date;
 
-public class SetTaskDoneCommand extends Command {
+public class SetTaskDoneCommand extends TodoListBotCommand {
     @Override
     public void run(Update update) {
         long chatId = update.message().chat().id();
