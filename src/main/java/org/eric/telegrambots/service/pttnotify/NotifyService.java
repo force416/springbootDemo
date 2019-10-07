@@ -51,4 +51,8 @@ public class NotifyService {
 
         return chatBoard;
     }
+
+    public void sendNotify() {
+
+    }
 }
