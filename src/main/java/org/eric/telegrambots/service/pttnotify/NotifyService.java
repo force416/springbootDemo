@@ -89,6 +89,7 @@ public class NotifyService {
                 if (isSameBoardName) {
                     List<Post> chatPosts = posts.stream()
                             .filter((post -> post.getLike() >= chatBoard.getLikeLimit()))
+                            .filter((post) -> post.getId() >= chatBoard.getLastNotifyPostId())
                             .collect(Collectors.toList());
 
                     Map<String, List<Post>> boardPostsMap = chatPostsMap.get(chatBoard.getChat().getId());
