@@ -13,6 +13,8 @@ public interface ChatBoardRepository extends JpaRepository<ChatBoard, Long> {
 
     Optional<ChatBoard> findByChatIdAndBoardId(long chatId, long boardId);
 
-    @Query(value = "SELECT DISTINCT board_id FROM chats_boards", nativeQuery = true)
-    List<Long> findDistinctBoardId();
+    @Query(value = "SELECT DISTINCT b.name " +
+            "FROM chats_boards c " +
+            "JOIN boards b ON c.board_id = b.id ", nativeQuery = true)
+    List<String> findDistinctBoard();
 }

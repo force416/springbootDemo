@@ -8,7 +8,6 @@ import org.eric.telegrambots.repository.todobot.ChatRepository;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.liquibase.LiquibaseDataSource;
 import org.springframework.test.annotation.Rollback;
 
 import javax.transaction.Transactional;
@@ -75,46 +74,43 @@ public class ChatBoardRepositoryTest extends SuperTest {
         chat2.setUsername("kali_kam_is_good");
         chat2 = chatRepository.save(chat2);
 
-        Board board = new Board();
-        board.setName("aaa");
-        board = boardRepository.save(board);
-
-        Board board2 = new Board();
-        board2.setName("bbb");
-        board2 = boardRepository.save(board2);
+        Optional<Board> board = boardRepository.findByName("sex");
+        Optional<Board> board2 = boardRepository.findByName("gossiping");
 
         ChatBoard chatBoard = new ChatBoard();
-        chatBoard.setBoard(board);
+        chatBoard.setBoard(board.get());
         chatBoard.setChat(chat);
         chatBoard.setLastNotifyPostId(12345678);
         chatBoard.setLikeLimit(50);
         chatBoard = chatBoardRepository.save(chatBoard);
 
         ChatBoard chatBoard2 = new ChatBoard();
-        chatBoard2.setBoard(board2);
+        chatBoard2.setBoard(board2.get());
         chatBoard2.setChat(chat);
         chatBoard2.setLastNotifyPostId(12345678);
         chatBoard2.setLikeLimit(50);
         chatBoard2 = chatBoardRepository.save(chatBoard2);
 
         ChatBoard chatBoard3 = new ChatBoard();
-        chatBoard3.setBoard(board);
+        chatBoard3.setBoard(board.get());
         chatBoard3.setChat(chat2);
         chatBoard3.setLastNotifyPostId(12345678);
         chatBoard3.setLikeLimit(50);
         chatBoard3 = chatBoardRepository.save(chatBoard3);
 
         ChatBoard chatBoard4 = new ChatBoard();
-        chatBoard4.setBoard(board2);
+        chatBoard4.setBoard(board2.get());
         chatBoard4.setChat(chat2);
         chatBoard4.setLastNotifyPostId(12345678);
         chatBoard4.setLikeLimit(50);
         chatBoard4 = chatBoardRepository.save(chatBoard4);
 
-        List<Long> resultList = chatBoardRepository.findDistinctBoardId();
+        List<String> resultList = chatBoardRepository.findDistinctBoard();
+
+        resultList.stream().forEach((boardName) -> System.out.println(boardName));
 
         Assert.assertNotNull(resultList);
-        Assert.assertTrue(resultList.contains(board.getId()));
-        Assert.assertTrue(resultList.contains(board2.getId()));
+        Assert.assertTrue(resultList.contains(board.get().getName()));
+        Assert.assertTrue(resultList.contains(board2.get().getName()));
     }
 }
