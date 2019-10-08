@@ -34,7 +34,8 @@ public class PTTNotifyScheduleTask {
                 boardEntry.getValue().stream().forEach((post) -> {
                     StringBuilder builder = new StringBuilder();
                     builder.append("看板: " + boardEntry.getKey() + "\n");
-                    builder.append("推文數: " + post.getLike() + "\n");
+                    String showLike = post.getLike() == 999 ? "爆": String.valueOf(post.getLike());
+                    builder.append("推文數: " + showLike + "\n");
                     builder.append("標題: " + post.getTitle() + "\n");
                     builder.append(post.getUrl());
                     telegramBot.execute(new SendMessage(chatId, builder.toString()));
