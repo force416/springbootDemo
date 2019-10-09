@@ -12,12 +12,16 @@ import java.util.Map;
 public abstract class PTTNotifyBotCommand {
     protected final static String START_COMMAND = "/start";
     protected final static String SUBSCRIBE_COMMAND = "/subscribe";
+    protected final static String UNSUBSCRIBE_COMMAND = "/unsubscribe";
+    protected final static String SETTING_COMMAND = "/setting";
 
     private static Map<String, PTTNotifyBotCommand> commandMap = new HashMap<>();
 
     static {
         commandMap.put(START_COMMAND, new StartCommand());
         commandMap.put(SUBSCRIBE_COMMAND, new SubscribeCommand());
+        commandMap.put(UNSUBSCRIBE_COMMAND, new UnsubscribeCommand());
+        commandMap.put(SETTING_COMMAND, new UnsubscribeCommand());
     }
 
     public abstract void run(Update update);
@@ -45,7 +49,7 @@ public abstract class PTTNotifyBotCommand {
     protected static SendMessage getHelpMsg(long chatId) {
         StringBuilder builder = new StringBuilder();
         builder.append("Use this format to subscribe ptt board:\n");
-        builder.append("/subscribe Gossiping \n");
+        builder.append("/subscribe Gossiping 30 \n");
 
         return new SendMessage(chatId, builder.toString());
     }

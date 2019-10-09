@@ -58,6 +58,17 @@ public class NotifyService {
         return chatBoard;
     }
 
+    public boolean unsubscribeBoard(long chatId, String boardName) {
+        Optional<Board> boardOptional = boardRepository.findByName(boardName);
+        if (!boardOptional.isPresent()) {
+            throw new NotFoundException(String.format("Can't find board: %s", boardName));
+        }
+
+        long rowCount = chatBoardRepository.deleteByChatIdAndBoardId(chatId, boardOptional.get().getId());
+
+        return rowCount == 1;
+    }
+
     public ChatBoard updateChatBoardLastNotifyPostId(long chatId, String boardName, long lastNotifyPostId) {
         Optional<Board> boardOptional = boardRepository.findByName(boardName);
         if (!boardOptional.isPresent()) {
