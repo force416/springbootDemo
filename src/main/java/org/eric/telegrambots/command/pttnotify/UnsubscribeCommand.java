@@ -27,6 +27,6 @@ public class UnsubscribeCommand extends PTTNotifyBotCommand {
         NotifyService notifyService = SpringContext.getBean(NotifyService.class);
         notifyService.unsubscribeBoard(chatId, boardName);
 
-        sendMsg(String.format("subscribe board: %s success", boardName), update);
+        sendMsg(String.format("unsubscribe board: %s success", boardName), update);
     }
 }

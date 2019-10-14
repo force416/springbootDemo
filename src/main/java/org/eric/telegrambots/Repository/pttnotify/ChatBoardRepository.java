@@ -21,5 +21,5 @@ public interface ChatBoardRepository extends JpaRepository<ChatBoard, Long> {
 
     @Query(value = "DELETE FROM chats_boards c " +
             "where c.chat_id = :chatId AND c.board_id = :boardId ", nativeQuery = true)
-    long deleteByChatIdAndBoardId(@Param("chatId") long chatId, @Param("boardId") long boardId);
+    void deleteByChatIdAndBoardId(@Param("chatId") long chatId, @Param("boardId") long boardId);
 }
