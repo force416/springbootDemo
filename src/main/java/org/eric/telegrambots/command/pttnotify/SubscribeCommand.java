@@ -18,7 +18,7 @@ public class SubscribeCommand extends PTTNotifyBotCommand {
         String boardName = columns.length >= 2 ? columns[1] : null;
 
         // like limit
-        int likeLimit = columns.length >= 3 && columns[2].matches("^\\d{1,2}$") ? Integer.parseInt(columns[2]) : 0;
+        int likeLimit = columns.length >= 3 && columns[2].matches("^\\d{1,2}$") ? Integer.parseInt(columns[2]) : 50;
 
         if (boardName == null) {
             sendMsg("Please input correct board name.", update);

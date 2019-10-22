@@ -114,4 +114,12 @@ public class NotifyService {
 
         return chatPostsMap;
     }
+
+    public List<ChatBoard> getSubscribedBoard(long chatId) {
+        return chatBoardRepository.findByChatId(chatId);
+    }
+
+    public void unSubscribeByChatId(long chatId) {
+        chatBoardRepository.deleteByChatId(chatId);
+    }
 }

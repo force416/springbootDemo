@@ -14,6 +14,8 @@ public abstract class PTTNotifyBotCommand {
     protected final static String SUBSCRIBE_COMMAND = "/subscribe";
     protected final static String UNSUBSCRIBE_COMMAND = "/unsubscribe";
     protected final static String SETTING_COMMAND = "/setting";
+    protected final static String STOP_COMMAND = "/stop";
+    protected final static String HELP_COMMAND = "/help";
 
     private static Map<String, PTTNotifyBotCommand> commandMap = new HashMap<>();
 
@@ -21,7 +23,8 @@ public abstract class PTTNotifyBotCommand {
         commandMap.put(START_COMMAND, new StartCommand());
         commandMap.put(SUBSCRIBE_COMMAND, new SubscribeCommand());
         commandMap.put(UNSUBSCRIBE_COMMAND, new UnsubscribeCommand());
-        commandMap.put(SETTING_COMMAND, new UnsubscribeCommand());
+        commandMap.put(SETTING_COMMAND, new SettingCommand());
+        commandMap.put(STOP_COMMAND, new StopCommand());
     }
 
     public abstract void run(Update update);
@@ -33,15 +36,7 @@ public abstract class PTTNotifyBotCommand {
         String[] texts = text.split(" ");
         String action = texts[0];
 
-        PTTNotifyBotCommand cmd = commandMap.get(action);
-
-        if (cmd == null) {
-            long chatId = update.message().chat().id();
-            TelegramBot telegramBot = (TelegramBot) SpringContext.getBean("pttNotifyBot");
-            telegramBot.execute(getHelpMsg(chatId));
-
-            return;
-        }
+        PTTNotifyBotCommand cmd = commandMap.getOrDefault(action, new HelpCommand());
 
         cmd.run(update);
     }
@@ -50,6 +45,12 @@ public abstract class PTTNotifyBotCommand {
         StringBuilder builder = new StringBuilder();
         builder.append("Use this format to subscribe ptt board:\n");
         builder.append("/subscribe Gossiping 30 \n");
+        builder.append("\n");
+        builder.append("Use this format to unsubscribe ptt board:\n");
+        builder.append("/unsubscribe Gossiping \n");
+        builder.append("\n");
+        builder.append("Use this format to get subscribed ptt boards:\n");
+        builder.append("/setting \n");
 
         return new SendMessage(chatId, builder.toString());
     }
