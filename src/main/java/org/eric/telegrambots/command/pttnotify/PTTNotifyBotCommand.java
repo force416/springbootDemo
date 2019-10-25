@@ -25,6 +25,7 @@ public abstract class PTTNotifyBotCommand {
         commandMap.put(UNSUBSCRIBE_COMMAND, new UnsubscribeCommand());
         commandMap.put(SETTING_COMMAND, new SettingCommand());
         commandMap.put(STOP_COMMAND, new StopCommand());
+        commandMap.put(HELP_COMMAND, new HelpCommand());
     }
 
     public abstract void run(Update update);
