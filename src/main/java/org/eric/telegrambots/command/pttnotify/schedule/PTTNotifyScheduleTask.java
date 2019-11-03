@@ -26,9 +26,9 @@ public class PTTNotifyScheduleTask {
     @Qualifier("pttNotifyBot")
     private TelegramBot telegramBot;
 
-    @Scheduled(fixedDelay = 60 * 5000)
+    @Scheduled(fixedDelay = 60 * 60000)
     public void sendNotify() {
-        logger.info("start send ptt notify to user");
+        logger.info("Start send ptt notify to user");
 
         Map<Long, Map<String, List<Post>>> chatBoardPostsMap = notifyService.getChatsNotifyPosts();
         chatBoardPostsMap.entrySet().stream().forEach((entry) -> {
@@ -50,5 +50,7 @@ public class PTTNotifyScheduleTask {
 
             });
         });
+
+        logger.info("End send ptt notify to user");
     }
 }
