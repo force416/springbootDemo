@@ -4,6 +4,8 @@ import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.request.SendMessage;
 import org.eric.telegrambots.model.pttnotify.Post;
 import org.eric.telegrambots.service.pttnotify.NotifyService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -15,6 +17,8 @@ import java.util.Map;
 @Component
 public class PTTNotifyScheduleTask {
 
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     private NotifyService notifyService;
 
@@ -24,6 +28,8 @@ public class PTTNotifyScheduleTask {
 
     @Scheduled(fixedDelay = 60 * 5000)
     public void sendNotify() {
+        logger.info("start send ptt notify to user");
+
         Map<Long, Map<String, List<Post>>> chatBoardPostsMap = notifyService.getChatsNotifyPosts();
         chatBoardPostsMap.entrySet().stream().forEach((entry) -> {
             long chatId = entry.getKey();
@@ -34,7 +40,7 @@ public class PTTNotifyScheduleTask {
                 boardEntry.getValue().stream().forEach((post) -> {
                     StringBuilder builder = new StringBuilder();
                     builder.append("看板: " + boardEntry.getKey() + "\n");
-                    String showLike = post.getLike() == 999 ? "爆": String.valueOf(post.getLike());
+                    String showLike = post.getLike() == 999 ? "爆" : String.valueOf(post.getLike());
                     builder.append("推文數: " + showLike + "\n");
                     builder.append("標題: " + post.getTitle() + "\n");
                     builder.append(post.getUrl());
