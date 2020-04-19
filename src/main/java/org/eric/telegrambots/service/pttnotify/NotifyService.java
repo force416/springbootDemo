@@ -21,13 +21,10 @@ import java.util.stream.Collectors;
 @Service("notifyService")
 public class NotifyService {
 
-    @Autowired
     private ChatBoardRepository chatBoardRepository;
 
-    @Autowired
     private ChatRepository chatRepository;
 
-    @Autowired
     private BoardRepository boardRepository;
 
     public ChatBoard subscribeBoard(long chatId, String boardName, int likeLimit) {
@@ -121,5 +118,20 @@ public class NotifyService {
 
     public void unSubscribeByChatId(long chatId) {
         chatBoardRepository.deleteByChatId(chatId);
+    }
+
+    @Autowired
+    public void setChatBoardRepository(ChatBoardRepository chatBoardRepository) {
+        this.chatBoardRepository = chatBoardRepository;
+    }
+
+    @Autowired
+    public void setChatRepository(ChatRepository chatRepository) {
+        this.chatRepository = chatRepository;
+    }
+
+    @Autowired
+    public void setBoardRepository(BoardRepository boardRepository) {
+        this.boardRepository = boardRepository;
     }
 }

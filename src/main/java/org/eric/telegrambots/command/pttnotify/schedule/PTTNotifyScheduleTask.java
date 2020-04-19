@@ -17,7 +17,7 @@ import java.util.Map;
 @Component
 public class PTTNotifyScheduleTask {
 
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private NotifyService notifyService;

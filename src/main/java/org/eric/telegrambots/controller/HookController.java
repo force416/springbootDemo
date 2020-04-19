@@ -19,7 +19,6 @@ import java.util.Date;
 @RequestMapping("/api/telegram-bot-hook")
 public class HookController {
 
-    @Autowired
     private ChatService chatService;
 
     @RequestMapping(path = {"/todo-list-bot"}, method = RequestMethod.POST)
@@ -74,5 +73,10 @@ public class HookController {
             return false;
         }
         return true;
+    }
+
+    @Autowired
+    public void setChatService(ChatService chatService) {
+        this.chatService = chatService;
     }
 }

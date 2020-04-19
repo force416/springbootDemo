@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Service("chatService")
 public class ChatService {
-    @Autowired
+
     private ChatRepository chatRepository;
 
     @Transactional(rollbackFor = Exception.class)
@@ -25,5 +25,10 @@ public class ChatService {
         }
 
         return userOptional.get();
+    }
+
+    @Autowired
+    public void setChatRepository(ChatRepository chatRepository) {
+        this.chatRepository = chatRepository;
     }
 }

@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 @Service("taskService")
 public class TaskService {
 
-    @Autowired
     private TaskRepository taskRepository;
 
     @Transactional(rollbackFor = Exception.class)
@@ -42,5 +41,10 @@ public class TaskService {
     @Transactional(rollbackFor = Exception.class)
     public Task updateTask(Task task) {
         return taskRepository.save(task);
+    }
+
+    @Autowired
+    public void setTaskRepository(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
     }
 }

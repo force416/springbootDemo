@@ -14,11 +14,9 @@ import java.util.List;
 
 @Service("alertService")
 public class AlertService {
-    @Autowired
+
     private AlertRepository alertRepository;
 
-    @Autowired
-    @Qualifier("todoBot")
     private TelegramBot telegramBot;
 
     public Alert addAlert(Alert alert) {
@@ -40,5 +38,16 @@ public class AlertService {
                 alertRepository.delete(alert);
             }
         });
+    }
+
+    @Autowired
+    public void setAlertRepository(AlertRepository alertRepository) {
+        this.alertRepository = alertRepository;
+    }
+
+    @Autowired
+    @Qualifier("todoBot")
+    public void setTelegramBot(TelegramBot telegramBot) {
+        this.telegramBot = telegramBot;
     }
 }
